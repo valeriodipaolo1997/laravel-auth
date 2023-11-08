@@ -1,13 +1,9 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
-
 use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
-
 use App\Http\Controllers\Controller;
-
 class ProjectController extends Controller
 {
     /**
@@ -16,10 +12,8 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::orderByDesc('id')->paginate(10);
-
         return view('admin.projects.index', compact('projects'));
     }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -27,7 +21,6 @@ class ProjectController extends Controller
     {
         //
     }
-
     /**
      * Store a newly created resource in storage.
      */
@@ -35,13 +28,15 @@ class ProjectController extends Controller
     {
         //
     }
-
     /**
      * Display the specified resource.
      */
     public function show(Project $project)
     {
-        //
+        
+        if ($project) {
+            return view('admin.projects.show', compact('project'));
+        }
     }
 
     /**
@@ -51,7 +46,6 @@ class ProjectController extends Controller
     {
         //
     }
-
     /**
      * Update the specified resource in storage.
      */
@@ -59,7 +53,6 @@ class ProjectController extends Controller
     {
         //
     }
-
     /**
      * Remove the specified resource from storage.
      */
