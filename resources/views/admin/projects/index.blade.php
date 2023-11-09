@@ -40,7 +40,7 @@
                     <td class="d-flex gap-2 py-4">
 
                         <a href=" {{route('admin.projects.show', $project->slug)}} " class="btn btn-outline-primary">View</a>
-                        <a href=" {{-- {{route('projects.edit', $project->id)}} --}} " class="btn btn-outline-success">Edit</a>
+                        <a href=" {{route('admin.projects.edit', $project->slug)}} " class="btn btn-outline-success">Edit</a> 
                     </td>
                 </tr>
 
