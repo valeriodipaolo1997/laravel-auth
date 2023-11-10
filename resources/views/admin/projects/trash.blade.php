@@ -11,7 +11,7 @@
     </div>
     @endif
 
-    
+
 
     <table class="table table-primary table-hover table-striped table-bordered">
 
@@ -21,7 +21,7 @@
                 <th scope="col">Title</th>
                 <th scope="col">Image</th>
                 <th scope="col">Description</th>
-                <th scope="col">Deleted at</th>
+                <th scope="col">Deleted</th>
                 <th scope="col">Options</th>
             </tr>
         </thead>
@@ -40,102 +40,110 @@
 
                 <td> {{$project->description}} </td>
 
-                <td> {{$project->deleted_at}} </td>
-
+                <td class="text-center">
+                    <div>{{$project->deleted_at->format('d-m-Y')}}</div>
+                    <div>{{$project->deleted_at->format('H:i')}}</div>
+               </td>
 
                 <td>
-                <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#modalId-restore-{{$project->id}}">
-                        Restore
-                    </button>
+
+                    <div class="d-flex gap-2">
+                        <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#modalId-restore-{{$project->id}}">
+                            <i class="fa-solid fa-recycle"></i>
+                        </button>
 
 
-                    <!-- Modal Body -->
-                    <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
-                    <div class="modal fade" id="modalId-restore-{{$project->id}}" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId-{{$project->id}}" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+                        <!-- Modal Body -->
+                        <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+                        <div class="modal fade" id="modalId-restore-{{$project->id}}" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId-{{$project->id}}" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
 
-                            <div class="modal-content">
+                                <div class="modal-content">
 
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="modalTitleId-{{$project->id}}">Warning!</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <div class="modal-header">
+                                        <h5 class="modal-title d-flex justify-content-center align-items-center gap-3 w-100" id="modalTitleId-{{$project->id}}">
+                                            <i class="fa-solid fa-triangle-exclamation text-warning"></i> Warning <i class="fa-solid fa-triangle-exclamation text-warning"></i>
+                                        </h5>
+                                    </div>
+                                    {{-- /.modal-header --}}
+
+                                    <div class="modal-body text-center">
+                                        Are you sure to restore?
+                                    </div>
+                                    {{-- /.modal-body --}}
+
+                                    <div class="modal-footer d-flex justify-content-center align-items-center gap-3">
+
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                                        <form action="{{ route('admin.restore', ['project' => $project->id]) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+
+                                            <button type="submit" class="btn btn-success">Restore</button>
+                                        </form>
+
+                                    </div>
+                                    {{-- /.modal-footer --}}
+
+
                                 </div>
-                                {{-- /.modal-header --}}
-
-                                <div class="modal-body">
-                                    Are you sure to restore?
-                                </div>
-                                {{-- /.modal-body --}}
-
-                                <div class="modal-footer">
-
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-
-                                    <form action="{{ route('admin.restore', ['project' => $project->id]) }}" method="POST">
-                                        @csrf
-                                        @method('PUT')
-
-                                        <button type="submit"
-                                            class="btn btn-success">Restore</button>
-                                    </form>
-
-                                </div>
-                                {{-- /.modal-footer --}}
+                                {{-- /.modal-content --}}
 
                             </div>
-                            {{-- /.modal-content --}}
+                            {{-- /.modal-dialog --}}
 
                         </div>
-                        {{-- /.modal-dialog --}}
-                    </div>
-                    {{-- /.modal --}}
 
-                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalId-delete-{{$project->id}}">
-                        Delete
-                    </button>
+                        {{-- /.modal --}}
+
+                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalId-delete-{{$project->id}}">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
 
 
-                    <!-- Modal Body -->
-                    <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
-                    <div class="modal fade" id="modalId-delete-{{$project->id}}" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId-{{$project->id}}" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+                        <!-- Modal Body -->
+                        <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+                        <div class="modal fade" id="modalId-delete-{{$project->id}}" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId-{{$project->id}}" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
 
-                            <div class="modal-content">
+                                <div class="modal-content">
 
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="modalTitleId-{{$project->id}}">Warning!</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <div class="modal-header">
+                                        <h5 class="modal-title d-flex justify-content-center align-items-center gap-3 w-100" id="modalTitleId-{{$project->id}}">
+                                            <i class="fa-solid fa-triangle-exclamation text-warning"></i> Warning <i class="fa-solid fa-triangle-exclamation text-warning"></i>
+                                        </h5>
+                                    </div>
+                                    {{-- /.modal-header --}}
+
+                                    <div class="modal-body">
+                                        Are you sure to delete? Irreversible action.
+                                    </div>
+                                    {{-- /.modal-body --}}
+
+                                    <div class="modal-footer d-flex justify-content-center align-items-center gap-3">
+
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                                        <form action="{{ route('admin.forceDelete', ['project' => $project->id]) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger">Confirm</button>
+                                        </form>
+
+                                    </div>
+                                    {{-- /.modal-footer --}}
+
                                 </div>
-                                {{-- /.modal-header --}}
-
-                                <div class="modal-body">
-                                    Are you sure to delete? Irreversible action.
-                                </div>
-                                {{-- /.modal-body --}}
-
-                                <div class="modal-footer">
-
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-
-                                    <form
-                                        action="{{ route('admin.forceDelete', ['project' => $project->id]) }}"
-                                        method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"
-                                            class="btn btn-danger">Confirm</button>
-                                    </form>
-
-                                </div>
-                                {{-- /.modal-footer --}}
+                                {{-- /.modal-content --}}
 
                             </div>
-                            {{-- /.modal-content --}}
+                            {{-- /.modal-dialog --}}
 
                         </div>
-                        {{-- /.modal-dialog --}}
+                        {{-- /.modal --}}
                     </div>
-                    {{-- /.modal --}}
+
                 </td>
 
             </tr>

@@ -15,11 +15,9 @@
             </div>
         @endif
 
-        <div class="py-4">
-            <h2>Edit of:</h2>
-            <strong>{{$project->title}}</strong>
+        <div class="pb-4">
+            <h2 class="text-muted text-uppercase">Edit</h2>
         </div>
-
 
         <form action=" {{route('admin.projects.update', $project)}}" method="POST" enctype="multipart/form-data">
             @csrf
