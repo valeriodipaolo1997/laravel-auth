@@ -6,13 +6,13 @@
     <div class="container">
 
         @if($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach($errors->all() as $error)
-                        <li> {{$error}} </li>
-                    @endforeach
-                </ul>
-            </div>
+        <div class="alert alert-danger">
+            <ul>
+                @foreach($errors->all() as $error)
+                <li> {{$error}} </li>
+                @endforeach
+            </ul>
+        </div>
         @endif
 
 
@@ -25,7 +25,7 @@
                 <input type="text" name="title" id="title" class="form-control @error('title') is-invalid @enderror" placeholder="" aria-describedby="helpId" value="{{old('title')}}">
                 <small id="titleHelper" class="text-muted">Type a title of Project</small>
                 @error('title')
-                    <div class="text-danger"> {{$message}} </div>
+                <div class="text-danger"> {{$message}} </div>
                 @enderror
             </div>
 
@@ -52,7 +52,25 @@
                 @error('content')
                 <div class="text-danger"> {{$message}} </div>
                 @enderror
-            </div>            
+            </div>
+
+            <div class="mb-5">
+                <label for="project_url" class="form-label">Project Url</label>
+                <input type="url" name="project_url" id="project_url" class="form-control @error('project_url') is-invalid @enderror" placeholder="" aria-describedby="helpId" value="{{old('project_url')}}">
+                <small id="project_urlHelper" class="text-muted">Type a Project Url</small>
+                @error('project_url')
+                <div class="text-danger"> {{$message}} </div>
+                @enderror
+            </div>
+
+            <div class="mb-5">
+                <label for="git_url" class="form-label">Git Url</label>
+                <input type="url" name="git_url" id="git_url" class="form-control @error('git_url') is-invalid @enderror" placeholder="" aria-describedby="helpId" value="{{old('git_url')}}">
+                <small id="git_urlHelper" class="text-muted">Type a Project git Url</small>
+                @error('git_url')
+                <div class="text-danger"> {{$message}} </div>
+                @enderror
+            </div>
 
             <button type="submit" class="btn btn-primary">Add</button>
             <a class="text-decoration-none btn btn-primary" href="{{ route('admin.projects.index') }}">Torna alla lista</a>

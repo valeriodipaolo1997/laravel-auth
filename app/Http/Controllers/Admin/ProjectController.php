@@ -33,11 +33,11 @@ class ProjectController extends Controller
     {
         $val_data = $request->validated();
 
-        $val_data['slug'] = Str::slug($request->title, '-');
+        $val_data['slug'] = Project::generateSlug($request->title);
         //dd($val_data);
 
         if ($request->has('thumb')) {
-            $file_path = Storage::put('projects_images', $request->thumb);
+            $file_path = Storage::disk('public')->put('projects_images', $request->thumb);
             $val_data['thumb'] = $file_path;
         }
 
@@ -69,9 +69,13 @@ class ProjectController extends Controller
     {
         $val_data = $request->validated();
 
+        $thumb = $project->thumb;
+        //dd($thumb);
+        $relative_path = Str::after($thumb, 'storage/');
+
         if ($request->has('thumb') && $project->thumb) {
 
-            Storage::delete($project->thumb);
+            Storage::delete($relative_path);
 
             $newImageFile = $request->thumb;
             $file_path = Storage::put('projects_images', $newImageFile);
@@ -87,9 +91,11 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        if (!is_null($project->exif_thumbnail)) {
+        //dd($project->exif_thumbnail);
+        //dd($project->thumb);
+        /*  if (!is_null($project->thumb)) {
             Storage::delete($project->thumb);
-        }
+        } */
         $project->delete();
 
         return to_route('admin.projects.index')->with('message', 'Welldone! Project deleted successfully');
@@ -112,6 +118,17 @@ class ProjectController extends Controller
     public function forceDelete($id)
     {
         $project = Project::withTrashed()->find($id);
+        $thumb = $project->thumb;
+
+        $relative_path = Str::after($thumb, 'storage/');
+
+
+         
+         if (!is_null($project->thumb)) {
+           //dd($project->thumb);
+            //dd(Storage::exists($relative_path));
+            Storage::delete($relative_path);
+        }
 
         $project->forceDelete();
 

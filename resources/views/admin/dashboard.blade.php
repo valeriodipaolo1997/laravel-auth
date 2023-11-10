@@ -11,8 +11,10 @@
     </div>
     <div class="row justify-content-center">
         <div class="col">
-            <div class="card">
-                <div class="card-header">{{ __('User Dashboard') }}</div>
+            <div class="card text-center">
+            <div class="card-header text-uppercase">
+                    users <i class="fa-solid fa-user-group fa-xs"></i>
+                </div>
 
                 <div class="card-body">
                     @if (session('status'))

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 
 class Project extends Model
@@ -14,8 +15,8 @@ class Project extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['title', 'thumb', 'description', 'content', 'slug'];
-
+    protected $fillable = ['title', 'thumb', 'description', 'content', 'slug', 'project_url', 'git_url'];
+    
     protected function thumb(): Attribute
     {
         return Attribute::make(
@@ -27,5 +28,10 @@ class Project extends Model
                 }
             }
         );
+    }
+
+    public static function generateSlug($title)
+    {
+        return Str::slug($title, '-');
     }
 }

@@ -6,13 +6,13 @@
     <div class="container">
 
         @if($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach($errors->all() as $error)
-                        <li> {{$error}} </li>
-                    @endforeach
-                </ul>
-            </div>
+        <div class="alert alert-danger">
+            <ul>
+                @foreach($errors->all() as $error)
+                <li> {{$error}} </li>
+                @endforeach
+            </ul>
+        </div>
         @endif
 
         <div class="pb-4">
@@ -28,7 +28,7 @@
                 <input type="text" name="title" id="title" class="form-control @error('title') is-invalid @enderror" placeholder="" aria-describedby="helpId" value=" {{old('title', $project->title)}}" required>
                 <small id="titleHelper" class="text-muted">Type a title of Project</small>
                 @error('title')
-                    <div class="text-danger"> {{$message}} </div>
+                <div class="text-danger"> {{$message}} </div>
                 @enderror
             </div>
 
@@ -38,13 +38,13 @@
                     <input type="file" name="thumb" id="thumb" class="form-control @error('thumb') is-invalid @enderror" placeholder="" aria-describedby="helpId" required>
                     <small id="imageHelper" class="text-muted">Upload an image</small>
                     @error('thumb')
-                        <div class="text-danger"> {{$message}} </div>
+                    <div class="text-danger"> {{$message}} </div>
                     @enderror
                 </div>
                 <div>
                     @if(!in_array('The thumb field is required.',$errors->all()))
-                        <div class="text-center">Old image</div>
-                        <img width="300" class="img-fluid" src="{{$project->thumb}}" alt="">
+                    <div class="text-center">Old image</div>
+                    <img width="300" class="img-fluid" src="{{$project->thumb}}" alt="">
                     @endif
                 </div>
             </div>
@@ -63,7 +63,25 @@
                 @error('content')
                 <div class="text-danger"> {{$message}} </div>
                 @enderror
-            </div>            
+            </div>
+
+            <div class="mb-5">
+                <label for="project_url" class="form-label">Project Url</label>
+                <input type="url" name="project_url" id="project_url" class="form-control @error('project_url') is-invalid @enderror" placeholder="" aria-describedby="helpId" value=" {{old('project_url', $project->project_url)}}" required>
+                <small id="project_urlHelper" class="text-muted">Type a Project Url</small>
+                @error('project_url')
+                <div class="text-danger"> {{$message}} </div>
+                @enderror
+            </div>
+
+            <div class="mb-5">
+                <label for="git_url" class="form-label">Git Url</label>
+                <input type="url" name="git_url" id="git_url" class="form-control @error('git_url') is-invalid @enderror" placeholder="" aria-describedby="helpId" value=" {{old('git_url', $project->git_url)}}" required>
+                <small id="git_urlHelper" class="text-muted">Type a Project git Url</small>
+                @error('git_url')
+                <div class="text-danger"> {{$message}} </div>
+                @enderror
+            </div>
 
             <button type="submit" class="btn btn-primary">Add</button>
             <a class="text-decoration-none btn btn-primary" href="{{ route('admin.projects.index') }}">Torna alla lista</a>
